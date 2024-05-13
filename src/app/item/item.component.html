@@ -1,0 +1,36 @@
+<div class="item">
+  <div class="row">
+    <p (click)="logger()">{{ item.description }}</p>
+    <span>
+      <button (click)="item.isImportant = !item.isImportant">
+        {{ item.isImportant ? 'set as not important' : 'important' }}
+      </button>
+
+      <button (click)="item.isDone = !item.isDone">
+        {{ item.isDone ? 'set as not Done' : 'done' }}
+      </button>
+    </span>
+  </div>
+
+  <div class="btn-wrapper" *ngIf="!editable">
+    <button class="btn" (click)="editable = !editable">Edit</button>
+    <button class="btn btn-warn" (click)="remove.emit()">Delete</button>
+  </div>
+
+  <div *ngIf="editable">
+    <input
+      class="sm-text-input"
+      [placeholder]="'edit ' + item.description"
+      [value]="item.description"
+      #editedItem
+      (keyup.enter)="saveItem(editedItem.value)"
+    />
+
+    <div class="btn-wrapper">
+      <button class="btn" (click)="editable = !editable">Cancel</button>
+      <button class="btn btn-save" (click)="saveItem(editedItem.value)">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
